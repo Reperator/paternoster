@@ -87,11 +87,16 @@ class uri:
             raise ValueError('invalid path')
 
         # normalize falsy values
-        result = {k: v if v else None for k, v in result.items()}
+        result = {k: v if v else '' for k, v in result.items()}
 
         missing = [k for k in self._required if not result[k]]
         if missing:
             raise ValueError('missing ' + ', '.join(missing))
+
+        if result['scheme']:
+            result['full'] = u'{scheme}://{domain}{path}'.format(**result)
+        else:
+            result['full'] = u'{domain}{path}'.format(**result)
 
         return result
 

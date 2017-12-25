@@ -40,17 +40,17 @@ def test_type_domain(value, wildcard, valid):
 
 
 @pytest.mark.parametrize("value,expected", [
-    ("", {'path': '/'}),
-    ("/foo", {'path': '/foo'}),
-    (u"/föö", {'path': u'/föö'}),
+    ("", {'path': '/', 'full': '/'}),
+    ("/foo", {'path': '/foo', 'full': '/foo'}),
+    (u"/föö", {'path': u'/föö', 'full': u'/föö'}),
     ("/bla.exe", {'path': '/bla.exe'}),
     ("/foo bar", False),
     ('a' * 511, {'path': '/' + 'a' * 511}),
     ('a' * 512, False),
     ("uberspace.de", {'domain': 'uberspace.de'}),
-    ("uberspace.de/", {'domain': 'uberspace.de'}),
+    ("uberspace.de/", {'domain': 'uberspace.de', 'full': 'uberspace.de/'}),
     ("uberspace.de/bla", {'domain': 'uberspace.de', 'path': '/bla'}),
-    ("https://uberspace.de/bla", {'scheme': 'https', 'domain': 'uberspace.de', 'path': '/bla'}),
+    ("https://uberspace.de/bla", {'scheme': 'https', 'domain': 'uberspace.de', 'path': '/bla', 'full': 'https://uberspace.de/bla'}),
     ("https://*.uberspace.de/bla", False),
     ("uberspace.deee", False),
     ("https://", {'scheme': 'https', 'path': '/'}),
